@@ -10,6 +10,7 @@ class App extends Component {
     super(props);
     this.state = {
       mode: "welcome",
+      selected_content_id : 2, // 기본값 설정
       subject : {title: "WEB", sub: "World wide web!"},
       content : {title: "HTML", desc: "HTML is HyperText Markup Language."},
       welcome : {title: "welcome", desc: "Hello, React!"},
@@ -29,14 +30,20 @@ class App extends Component {
       _title = this.state.welcome.title;
       _desc = this.state.welcome.desc;
     }else if(this.state.mode === "read") {
-      _title = this.state.contents[0].title;
-      _desc = this.state.contents[0].desc;
+      let i=0;
+      while(i<this.state.contents.length) { // while(조건식) // 조건이 참일때까지 반복문
+        let data = this.state.contents[i];
+        if(data.id === this.state.selected_content_id) {
+          _title = data.title;
+          _desc = data.desc;
+          break; // while 조건문 종료 => while 문 바깥의 코드 실행
+        }
+        i++;
+      }      
     }
 
     return (
       <div className="App">
-        {/* <Subject></Subject> */}
-        {/* <Subject title="WEB" desc="world wide web!"></Subject> */}
         <Subject 
         title={this.state.subject.title} 
         desc={this.state.subject.sub}
@@ -49,32 +56,17 @@ class App extends Component {
         >
         </Subject>
 
-        {/* <header>
-          <h1><a href="/" onClick={function(e){ // e : 이벤트 객체. 클릭이벤트가 발생하는 태그의 이벤트 정보
-              // alert("hi"); // 클릭시 함수실행
-              
-              // console.log("onClick this", this); // this 는 undefined
-              console.log(e);
-              // debugger; 브라우저가 실행을 멈추고, sources 로 이동
-              e.preventDefault(); 
-              // 클릭 후 a 태그의 href 로 이동되면서 페이지가 리로드 된다.
-              // html 태그의 기본동작을 막는다. (a 태그가 페이지 이동되는 기본동작을 막음)
-            
-              // return;
-
-              // this.state.mode = "read"; // 에러) 👀 컴포넌트의 mode 변경하기! 
-              // * onClick 이 실행되는 함수 안에서는 this 컴포넌트 자신이 아니라. 정의되지 않은 값
-              // 🍒해결방법 => (함수).bind(this)
-              // 🍒해결방법  => this.setState({}) 함수 사용 (컴포넌트 App 의 state 값 변경)
-              this.setState({
-                mode: "read"
-              });
-               
-          }.bind(this)}>{this.state.subject.title}</a></h1> // 여기서 this 는 컴포넌트 App 
-          {this.state.subject.sub}
-        </header> */}
-        
-        <TOC data={this.state.contents}></TOC>
+        <TOC
+        data={this.state.contents}
+        onChangePage={function(id){
+          // debugger;
+          // alert("TOC 이벤트");
+          this.setState({
+            mode : "read",
+            selected_content_id : Number(id) // id 가 "" 문자로 넘어오므로 숫자로 형변환(Number) 
+          })
+        }.bind(this)}
+        ></TOC>
          {/* 부모컴포넌트 App 의 state (내부정보) 를 하위(자식) 컴포넌트의 props(속성)을 통해 전달하는 것 */}
 
         <Content 

@@ -17,8 +17,8 @@ class TOC extends Component {
       // newProps : 변경되는 props
       // newState : 변경되는 state(== this.setState) 
       // debugger;
-      console.log("newState", newState); // {counter : 1}
-      console.log("this.state", this.state); // {counter : 0}
+      // console.log("newState", newState); // {counter : 1}
+      // console.log("this.state", this.state); // {counter : 0}
       console.log("shouldComponentUpdate", newProps.data, this.props.data)
       
      /*  if(newState == this.state) { 
@@ -45,7 +45,7 @@ class TOC extends Component {
             // a 태그의 속성 중 dataset 으로 접근할 수 있다.
             // data-id == e.target.dataset.id
             onClick={function(e){
-              console.log("이벤트 대상", e.target); // e.target : 이벤트가 발생하는 대상(태그)
+              // console.log("이벤트 대상", e.target); // e.target : 이벤트가 발생하는 대상(태그)
               e.preventDefault();
               this.props.onChangePage(e.target.dataset.id); // 🍒id 값을 함수 매개변수로 넘기기
             }.bind(this)} // bind() 의 매개변수로 변수를 넣으면, bind 하는 함수 function() 의 매개변수로도 변수를 넘길수 있다. d.id 
@@ -55,7 +55,7 @@ class TOC extends Component {
             // key 값으로는 식별자 id 값을 주기 (리액트가 요청하는 에러사항이다.)
         });
 
-        list.push(<button onClick={this.onClick}>state 변경?</button>)
+        // list.push(<button onClick={this.onClick}>state 변경?</button>)
 
       return(
         <nav>
